@@ -41,5 +41,15 @@ export class GraphNode extends NodeT {
 }
 
 export class NodeImage {
-    
+    private node: NodeT;
+    private filled: boolean;
+
+    constructor(node: NodeT) {
+        this.node = node;
+        this.filled = false;
+    }
+
+    fill() {
+        this.filled = true;
+    }
 }
