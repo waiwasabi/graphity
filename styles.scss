@@ -1,0 +1,22 @@
+@import "./node_modules/bootstrap/scss/bootstrap.scss";
+@import "./node_modules/bootstrap/scss/functions";
+@import "./node_modules/bootstrap/scss/variables";
+@import "./node_modules/bootstrap/scss/mixins";
+
+#purp {
+    background-color: $indigo-900;
+    color: #fffafa;
+}
+
+#welcome {
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#welcomeLine {
+  margin: auto;
+  width: 60%;
+}
