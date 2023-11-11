@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import * as d3 from 'd3';
 import { forceSimulation, SimulationNodeDatum } from 'd3-force'
 
+type GraphDatum = { id: string, value: number };
 
 const width = 920;
 const height = 500;
@@ -66,7 +67,7 @@ export default function D3Graph() {
         d3.select("#d3-graph svg").remove();
 
         const simulation = forceSimulation(graph.nodes as SimulationNodeDatum[])
-            .force('link', d3.forceLink(graph.links).id(d => (d as { id: string, value: number }).id).distance(60))
+            .force('link', d3.forceLink(graph.links).id(d => (d as GraphDatum).id).distance(60))
             .force('charge', d3.forceManyBody().strength(-200))
             .force('center', d3.forceCenter(width / 2, height / 2));
 
@@ -97,9 +98,9 @@ export default function D3Graph() {
             // .attr("cy", d => d.y);
             node  // todo: pan
                 .attr('cx', function (d) { return d.x = Math.max(radius, Math.min(width - radius, d.x)); })
-                .attr('cy', function (d) { return d.y = Math.max(radius, Math.min(height - radius, d.y)); });
-
-            // update label positions
+                .attr('cy', function (d) { return d.y = Math.max(radius, Math.min(height - radius, d.y)); })
+            
+                // update label positions
             label
                 .attr("x", d => { return d.x; })
                 .attr("y", d => { return d.y; })
@@ -123,8 +124,10 @@ export default function D3Graph() {
                 .attr('class', 'node')
                 .attr('r', radius)
                 .attr('fill', 'green')
+                .attr('node-id', d => d.id)
                 .merge(node)
                 .call(drag(simulation))
+                .on("click", function (this) { d3.select(this).attr("fill", "red"); console.log(this) });
 
             label = label.data(graph.nodes, d => d.id);
             label.exit().remove();
@@ -143,9 +146,9 @@ export default function D3Graph() {
             const point = d3.pointer(event);
             let r = (Math.random() + 1).toString(36).substring(7);
             let newNode = { id: r, value: 7, x: point[0], y: point[1], vx: 0, vy: 0 };
-            let linkNode = { source: 'z', target: r, weight: 1 };
+            //let linkNode = { source: 'z', target: r, weight: 1 };
             graph.nodes.push(newNode);
-            graph.links.push(linkNode);
+            //graph.links.push(linkNode);
         }
 
         function onClick(event) {
