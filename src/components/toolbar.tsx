@@ -4,7 +4,7 @@ import '../app/globals.css';
 export default function Toolbar() {
     function toDo() {}
     return (
-        <div className='absolute left-20 top-20 z-10'>
+        <div className='absolute left-10 top-10 z-10 drop-shadow-md'>
             <div className="h-8 flex flex-row bg-[#D7E6EA] items-center px-3 py-1 rounded-lg">
                 <button className='m-2 w-5 opacity-50 duration-500 hover:opacity-100'>
                     <img src='/circle.png' alt='Node'/>

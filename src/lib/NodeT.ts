@@ -25,10 +25,12 @@ export class NodeT implements INode {
 
 export class GraphNode extends NodeT {
     private edges: GraphNode[];
+    private visited: boolean;
 
     constructor(val: string, loc: location) {
         super(val, loc);
         this.edges = [];
+        this.visited = false;
     }
 
     getEdges(): GraphNode[] {
@@ -37,6 +39,17 @@ export class GraphNode extends NodeT {
 
     addEdge(node: GraphNode): void {
         this.edges.push(node);
+    }
+
+    /**
+     * Traverses the node and marks it as visited
+     */
+    visit(): void {
+        this.visited = true;
+    }
+
+    isVisited(): boolean {
+        return this.visited;
     }
 }
 
