@@ -37,9 +37,9 @@ export default function D3Graph() {
 
         const graph = {
             nodes: [
+                { id: 'r', value: 6 },
                 { id: 'q', value: 7 },
                 { id: 'a', value: 1 },
-                { id: 'r', value: 6 },
                 { id: 's', value: 8 },
                 { id: 't', value: 5 },
                 { id: 'u', value: 6 },
@@ -50,8 +50,8 @@ export default function D3Graph() {
                 { id: 'z', value: 6 }
             ],
             links: [
-                { source: 'q', target: 'a', weight: 1 },
                 { source: 'q', target: 'r', weight: 1 },
+                { source: 'q', target: 'a', weight: 1 },
                 { source: 'a', target: 't', weight: 1 },
                 { source: 'r', target: 't', weight: 1 },
                 { source: 'r', target: 's', weight: 1 },
@@ -126,7 +126,7 @@ export default function D3Graph() {
                 .attr('class', 'node')
                 .attr('r', radius)
                 .attr('fill', 'green')
-                .attr('id', d => d.id)
+                .attr('nodeID', d => d.id)
                 .merge(node)
                 .call(drag(simulation))
                 .on('click', selectNode);
@@ -137,9 +137,12 @@ export default function D3Graph() {
                 .append('text')
                 .attr('class', 'node-label')
                 .text(d => d.id)
+                .attr('nodeID', d => d.id)
                 .style("font-size", "1em")
                 .attr('user-select', 'none')
-                .merge(label);
+                .call(drag(simulation))
+                .merge(label)
+                .on('click', selectNode);
          
 
             simulation.nodes(graph.nodes as SimulationNodeDatum[]);
@@ -156,11 +159,23 @@ export default function D3Graph() {
         }
 
         function selectNode(event){
-            //if (event.defaultPrevented) return;
-            //console.log(event.target);
-            console.log(event.target.id);
-            d3.select(`#${event.target.id}`).style("fill", "yellow");
+            console.log(event.target.__data__.id);
+            console.log(document.querySelector(`circle [node-id="${event.target.__data__.id}"]`));
+            
+            //d3.select(document.querySelector('circle[node-id]')).style("fill", "yellow");
+            //document.querySelector('circle[node-id]').fill = "yellow";
+            //d3.select(`#${event.target.getAttribute('node-id')}`).style("fill", "yellow");
+            // if(event.target.localName == 'circle'){
+            //     d3.select(`#${event.target.id}`).style("fill", "yellow");
+            // }
+            // else if(event.target.localName == 'text'){
+            //     console.log(event.target);
+            //     d3.select(`#${event.target.getAttribute('node-id')}`).style("fill", "yellow");
+            // }
+
+            // console.log(event.target);
         }
+
 
         function onClick(event) {
             //console.log(event);
