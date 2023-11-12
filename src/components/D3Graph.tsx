@@ -9,7 +9,7 @@ const width = 920;
 const height = 500;
 const radius = 20;
 
-let select = true;
+let select = true; 
 
 export default function D3Graph() {
     const ref = useRef();
@@ -138,35 +138,7 @@ export default function D3Graph() {
                 .style("font-size", "1em")
                 .attr('user-select', 'none')
                 .merge(label);
-
-
-            // node = node.data(graph.nodes, d => d.id);
-            // //console.log(node);
-            // node.exit().remove();
-            // node = node.enter()
-            //     .append('circle')
-            //     .attr('class', 'node')
-            //     .attr('r', radius)
-            //     .attr('fill', 'green')
-            //     .attr('nodeID', d => d.id)
-            //     .merge(node)
-            //     .call(drag(simulation))
-            //     .on('click', selectNode);
-
-            // label = label.data(graph.nodes, d => d.id);
-            // label.exit().remove();
-            // label = label.enter()
-            //     .append('text')
-            //     .attr('class', 'node-label')
-            //     .text(d => d.id)
-            //     .attr('nodeID', d => d.id)
-            //     .style("font-size", "1em")
-            //     .attr('user-select', 'none')
-            //     .call(drag(simulation))
-            //     .merge(label)
-            //     .on('click', selectNode);
-         
-
+        
             simulation.nodes(graph.nodes as SimulationNodeDatum[]);
             simulation.alpha(1).restart();
         }
@@ -181,22 +153,8 @@ export default function D3Graph() {
         }
 
         function selectNode(event){
-            console.log(this);
-            //var nodeDom = document.querySelector(`circle[nodeID=\"${event.target.__data__.id}\"]`);
-            
-            
-            //d3.select(document.querySelector('circle[node-id]')).style("fill", "yellow");
-            //document.querySelector('circle[node-id]').fill = "yellow";
-            //d3.select(`#${event.target.getAttribute('node-id')}`).style("fill", "yellow");
-            // if(event.target.localName == 'circle'){
-            //     d3.select(`#${event.target.id}`).style("fill", "yellow");
-            // }
-            // else if(event.target.localName == 'text'){
-            //     console.log(event.target);
-            //     d3.select(`#${event.target.getAttribute('node-id')}`).style("fill", "yellow");
-            // }
-
-            // console.log(event.target);
+            console.log(this.querySelector("circle"));
+            d3.select(this.querySelector("circle")).style("fill", "yellow");
         }
 
 
