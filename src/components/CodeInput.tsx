@@ -30,7 +30,7 @@ export default function CodeInput() {
                     <div className='m-0 text-right'>
                         <div className='w-100'></div>
                         <button type="reset" className='bg-[#324449] px-7 p-5 text-white font-bold font-mono rounded-lg opacity-100 hover:opacity-90 duration-500 mr-3' >Reset</button>
-                        <button type="submit" className='bg-[#324449] px-9 p-5 text-white font-bold font-mono rounded-lg opacity-100 hover:opacity-90 duration-500 mr-72' onClick={scrTop}>Run</button>
+                        <button type="submit" className='bg-[#324449] px-9 p-5 text-white font-bold font-mono rounded-lg opacity-100 hover:opacity-90 duration-500 mr-1' onClick={scrTop}>Run</button>
                     </div>
                 </div>
             
