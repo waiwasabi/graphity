@@ -1,12 +1,16 @@
 ### Instructions
 ##### Graph Creation
-**Node Tool** - Left click on any empty space to create a disconnected node
-**Edge Tool** - Left click on any two pre-existing nodes to create a directed edge
-**Eraser Tool** - Left click on any node to delete that node and any corresponding edges
-##### Code Generation
-Press the **Generate** button to generate the JSON text corresponding to the graph created using the interface
+**Node Tool** - Left click on any empty space to create a disconnected node 
+
+**Edge Tool** - Left click on any two nodes to create an edge between them, or delete the edge if one already exists 
+
+**Eraser Tool** - Left click on any node to delete it.
+
+##### Serialized Graph Generation
+Trigger the **Generate** button to generate a serialized representation of the graph.
+
 ##### Graph Visualization
-User input in the text editor is transformed into a TypeScript function that is called, which can be used to visualize the algorithm performed on the graph in real-time. The user does not need to include a class header, only the body of the following function:
+User input in the text editor is transformed into a JavaScript function, which can be used to run an algorithm on the graph in real-time. The user need not need include a class header, only the body of the following function:
 
 ``` ts
 function traverse(graph: Graph): void {
@@ -15,13 +19,12 @@ function traverse(graph: Graph): void {
 ```
 
 At each step the user would like to visualize, **visit()** should be called on the node they would like highlighted. Additional documentation can be found below.
+
 ### Documentation
-##### Graph class
+##### Graph object
+The exposed `graph` variable is of type `graphology.Graph`. Please see https://graphology.github.io/ for relevant documentation.
 ``` ts
 class Graph {
-	/* Creates a new Graph object */
-	constructor();
-
 	/* Returns the array of all Node objects in the graph */
 	getNodes(): GraphNode[];
 
@@ -36,32 +39,37 @@ class Graph {
 }
 ```
 
-##### GraphNode class
-``` ts
-class GraphNode {
-	/* Creates a new GraphNode objects with the given id and val */
-	constructor(id: string, val: string);
+### Examples
+Below are example use cases of the shell.
 
-	/** Returns an array of GraphNodes the current node 
-	  * has a directed edge to */
-	getEdges(): GraphNode[];
+#### Basic Analysis
+```ts
+/* print the number of nodes in the graph */
+console.log(graph.order);
+```
 
-	/* Adds an Edge from the given GraphNode to a target GraphNode */
-	addEdge(target: GraphNode): void;
+#### Graph Search
+```ts
+/* Perform Breadth-First Search on the graph */
+const visited = new Set();
+const queue = ["r"];
+const result = [];
 
-	/* Marks a GraphNode as visited 
-	 * and displays it on the visualizer */
-	visit(): void;
+visited.add("r");
 
-	/* Returns whether a GraphNode has been visited already */
-	isVisited(): boolean;
+while (queue.length > 0) {
+  const currentNode = queue.shift();
+  result.push(currentNode);
+
+  const neighbors = graph.neighbors(currentNode);
+  for (let i = 0; i < neighbors.length; i++) {
+    const neighbor = neighbors[i];
+    if (!visited.has(neighbor)) {
+      visited.add(neighbor);
+      queue.push(neighbor);
+      console.log(neighbor);
+    }
+  }
 }
 ```
 
-##### DirectedEdge class
-``` ts
-class DirectedEdge {
-	/* Creates a DirectedEdge between the two given GraphNodes */
-	constructor(from: GraphNode, to: GraphNode);
-}
-```
