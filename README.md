@@ -5,8 +5,10 @@
 **Edge Tool** - Left click on any two nodes to create an edge between them, or delete the edge if one already exists 
 
 **Eraser Tool** - Left click on any node to delete it.
-##### Code Generation
-Press the **Generate** button to generate the JSON text corresponding to the graph created using the interface
+
+##### Serialized Graph Generation
+Trigger the **Generate** button to generate a serialized representation of the graph.
+
 ##### Graph Visualization
 User input in the text editor is transformed into a TypeScript function that is called, which can be used to visualize the algorithm performed on the graph in real-time. The user does not need to include a class header, only the body of the following function:
 
