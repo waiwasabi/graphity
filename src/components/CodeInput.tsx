@@ -1,5 +1,6 @@
 'use client';
 import React, { useRef, useEffect, Component } from 'react';
+import {graph} from '../graph'
 
 function scrTop() {
     document.body.scrollTop = document.documentElement.scrollTop = 0;
@@ -25,12 +26,13 @@ export default function CodeInput() {
         <form method="post" onSubmit={handleSubmit}>
             <div className="flex flex-col justify-center">
                 <div className="m-0">
-                    <textarea style={{resize: "none"}} name="codeInput" rows={20} cols ={98} className="rounded-lg bg-[#324449] border-4 text-white p-5 font-mono" />
+                    <textarea style={{resize: "none"}} name="codeInput" rows={20} cols ={98} className="rounded-lg bg-[#324449] text-white p-5 font-mono" />
                 </div>
                     <div className='m-0 text-right'>
                         <div className='w-100'></div>
+                        <a href="Documentation.pdf" target="_blank" className='bg-[#324449] float-left px-9 p-5 text-white font-bold font-mono rounded-lg opacity-100 hover:opacity-90 duration-500 ml-1'>Documentation</a>
                         <button type="reset" className='bg-[#324449] px-7 p-5 text-white font-bold font-mono rounded-lg opacity-100 hover:opacity-90 duration-500 mr-3' >Reset</button>
-                        <button type="submit" className='bg-[#324449] px-9 p-5 text-white font-bold font-mono rounded-lg opacity-100 hover:opacity-90 duration-500 mr-72' onClick={scrTop}>Run</button>
+                        <button type="submit" className='bg-[#324449] px-9 p-5 text-white font-bold font-mono rounded-lg opacity-100 hover:opacity-90 duration-500 mr-1' onClick={scrTop}>Run</button>
                     </div>
                 </div>
             
