@@ -126,7 +126,7 @@ export default function D3Graph() {
             //let linkNode = { source: 'z', target: r, weight: 1 };
             graph.nodes.push(newNode);
             //graph.links.push(linkNode);
-            setGraph(JSON.stringify(graph));
+            setGraph(JSON.stringify(graph, null, 2));
         }
 
         function selectNode(this, event) {
