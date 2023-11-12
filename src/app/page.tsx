@@ -27,6 +27,9 @@ export default function Home() {
             <CodeInput />
           </div>
         </div>
+        <div id="d3-node-info">
+          <p>Node Info</p>
+        </div>
         
       </div>
 

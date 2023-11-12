@@ -26,7 +26,7 @@ export default function CodeInput() {
         <form method="post" onSubmit={handleSubmit}>
             <div className="flex flex-col justify-center">
                 <div className="m-0">
-                    <textarea style={{resize: "none"}} name="codeInput" rows={20} cols ={98} className="rounded-lg bg-[#324449] text-white p-5 font-mono" />
+                    <textarea style={{resize: "none"}} name="codeInput" rows={20} cols ={98} className="rounded-lg bg-[#324449] text-white p-5 font-mono mr-10" />
                 </div>
                     <div className='m-0 text-right'>
                         <div className='w-100'></div>
