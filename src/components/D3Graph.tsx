@@ -5,6 +5,7 @@ import * as d3 from 'd3';
 import { forceSimulation, SimulationNodeDatum } from 'd3-force'
 import { GraphContext } from './GraphContext';
 import { UserModeContext, UserMode } from './UserModeContext';
+import { forD3, forGraphology } from '@/lib/Graphology';
 
 type GraphDatum = { id: string, value: number };
 
@@ -18,9 +19,9 @@ export default function D3Graph() {
     const { s_graph, setGraph } = useContext(GraphContext);
     const { mode } = useContext(UserModeContext);
     const modeRef = useRef();
-  
+
     useEffect(() => {
-      modeRef.current = mode;
+        modeRef.current = mode;
     }, [mode]);
 
     var svg, link, node, circle, label;
@@ -46,7 +47,7 @@ export default function D3Graph() {
         return d3.drag().on('start', dragstarted).on('drag', dragged).on('end', dragended);
     };
 
-    const graph = JSON.parse(s_graph);
+    const graph: any = forD3(JSON.parse(s_graph));  // TODO: this is not initially printed as a graphology graph.
 
     const simulation = forceSimulation(graph.nodes as SimulationNodeDatum[])
         .force('link', d3.forceLink(graph.links).id(d => (d as GraphDatum).id).distance(60))
@@ -123,6 +124,7 @@ export default function D3Graph() {
 
             simulation.nodes(graph.nodes as SimulationNodeDatum[]);
             simulation.alpha(1).restart();
+            setGraph(JSON.stringify(forGraphology(graph), null, 2));
         }
 
         function addNode(event) {
@@ -130,7 +132,6 @@ export default function D3Graph() {
             let r = (Math.random() + 1).toString(36).substring(7);
             let newNode = { id: r, value: 0, x: point[0], y: point[1], vx: 0, vy: 0 };
             graph.nodes.push(newNode);
-            setGraph(JSON.stringify(graph, null, 2));
         }
 
         function selectNode(this, event) {
@@ -149,8 +150,6 @@ export default function D3Graph() {
                     connectArray[1] = this;
                     d3.select(this.querySelector("circle")).style("fill", "purple");
 
-                    console.log("links:");
-                    console.log(graph.links);
                     let x = connectArray[0].getAttribute("nodeID");
                     let y = connectArray[1].getAttribute("nodeID");
                     //graph.nodes.push({source: x, destination: y, weight: 1});
@@ -173,8 +172,6 @@ export default function D3Graph() {
                     update();
 
                 }
-
-                console.log(connectArray);
             }
         }
 
