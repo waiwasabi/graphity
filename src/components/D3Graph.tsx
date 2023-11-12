@@ -12,9 +12,7 @@ const width = 920;
 const height = 500;
 const radius = 23;
 
-
 let connectArray: [any, any] = [null, null];
-
 
 export default function D3Graph() {
     const { s_graph, setGraph } = useContext(GraphContext);
@@ -82,8 +80,6 @@ export default function D3Graph() {
                 .attr("y2", d => d.target.y);
 
             // update node positions
-
-            //node
             circle  // todo: pan
                 .attr('cx', function (d) { return d.x = Math.max(radius, Math.min(width - radius, d.x)); })
                 .attr('cy', function (d) { return d.y = Math.max(radius, Math.min(height - radius, d.y)); })
@@ -102,6 +98,7 @@ export default function D3Graph() {
                 .append('line')
                 .attr('class', 'link')
                 .attr("stroke", "#999")
+                .attr("stroke-width", 3)
                 .attr("stroke-opacity", 0.6)
                 .merge(link)
                 .lower();
@@ -200,6 +197,7 @@ export default function D3Graph() {
                 deleteNode(this);
             }
         }
+
 
         function onClick(event) {
             if (event.target.localName == 'svg' && modeRef.current === UserMode.Node) {
