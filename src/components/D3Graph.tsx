@@ -9,8 +9,8 @@ import { forD3, forGraphology } from '@/lib/Graphology';
 
 type GraphDatum = { id: string, value: number };
 
-const width = 920;
-const height = 500;
+const width = 1600;
+const height = 700;
 const radius = 23;
 
 let connectArray: [any, any] = [null, null];
