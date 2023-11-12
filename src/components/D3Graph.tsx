@@ -1,8 +1,10 @@
 'use client'
 
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useContext, useEffect, useRef } from 'react'
 import * as d3 from 'd3';
 import { forceSimulation, SimulationNodeDatum } from 'd3-force'
+import { GraphContext } from './GraphContext';
+import { UserModeContext } from './UserModeContext';
 
 type GraphDatum = { id: string, value: number };
 
@@ -13,8 +15,11 @@ const radius = 20;
 let select = true;
 
 export default function D3Graph() {
-    const ref = useRef();
+    const { s_graph, setGraph } = useContext(GraphContext);
+    const { mode } = useContext(UserModeContext);
+
     useEffect(() => {
+        const graph = JSON.parse(s_graph);
         const drag = (simulation) => {
             function dragstarted(event, d) {
                 if (!event.active) simulation.alphaTarget(0.3).restart();
@@ -36,36 +41,6 @@ export default function D3Graph() {
             return d3.drag().on('start', dragstarted).on('drag', dragged).on('end', dragended);
         };
 
-        const graph = {
-            nodes: [
-                { id: 'r', value: 6 },
-                { id: 'q', value: 7 },
-                { id: 'a', value: 1 },
-                { id: 's', value: 8 },
-                { id: 't', value: 5 },
-                { id: 'u', value: 6 },
-                { id: 'v', value: 3 },
-                { id: 'w', value: 5 },
-                { id: 'x', value: 1 },
-                { id: 'y', value: 2 },
-                { id: 'z', value: 6 }
-            ],
-            links: [
-                { source: 'q', target: 'r', weight: 1 },
-                { source: 'q', target: 'a', weight: 1 },
-                { source: 'a', target: 't', weight: 1 },
-                { source: 'r', target: 't', weight: 1 },
-                { source: 'r', target: 's', weight: 1 },
-                { source: 's', target: 'u', weight: 1 },
-                { source: 't', target: 'v', weight: 1 },
-                { source: 'u', target: 'w', weight: 1 },
-                { source: 'v', target: 'x', weight: 1 },
-                { source: 'w', target: 'y', weight: 1 },
-                { source: 'x', target: 'z', weight: 1 },
-                { source: 'y', target: 'z', weight: 1 }
-            ]
-        };
-
         d3.select("#d3-graph svg").remove();
 
         const simulation = forceSimulation(graph.nodes as SimulationNodeDatum[])
@@ -81,8 +56,10 @@ export default function D3Graph() {
             .on("click", e => onClick(e));
 
         var link = svg.selectAll('.link').data(graph.links);
-        var node: any = svg.selectAll('.node').data(graph.nodes);
-        var label: any = svg.selectAll('.node-label').data(graph.nodes);
+        var node: any = svg.selectAll('.g').data(graph.nodes);
+        var circle: any = svg.selectAll('.circle');
+        var label: any = svg.selectAll('.node-label');
+        console.log(circle);
         update();
 
         simulation.on("tick", () => {
@@ -98,11 +75,11 @@ export default function D3Graph() {
             //node
             // .attr("cx", d => d.x)
             // .attr("cy", d => d.y);
-            node  // todo: pan
+            circle  // todo: pan
                 .attr('cx', function (d) { return d.x = Math.max(radius, Math.min(width - radius, d.x)); })
                 .attr('cy', function (d) { return d.y = Math.max(radius, Math.min(height - radius, d.y)); })
-            
-                // update label positions
+
+            // update label positions
             label
                 .attr("x", d => { return d.x; })
                 .attr("y", d => { return d.y; })
@@ -120,32 +97,23 @@ export default function D3Graph() {
                 .lower();
 
             node = node.data(graph.nodes, d => d.id);
-            //console.log(node);
-            node.exit().remove();
             node = node.enter()
-                .append('circle')
-                .attr('class', 'node')
-                .attr('r', radius)
-                .attr('fill', 'green')
+                .append('g')
                 .attr('nodeID', d => d.id)
                 .merge(node)
                 .call(drag(simulation))
                 .on('click', selectNode);
-                //.on("click", function (this) { d3.select(this).attr("fill", "red"); console.log(this) });
-
-            label = label.data(graph.nodes, d => d.id);
-            label.exit().remove();
-            label = label.enter()
-                .append('text')
-                .attr('class', 'node-label')
+            circle = node.append('circle')
+                .attr('class', 'node')
+                .attr('r', radius)
+                .attr('fill', 'green')
+                .merge(circle);
+            label = node.append('text')
                 .text(d => d.id)
-                .attr('nodeID', d => d.id)
+                .attr('node-label', 'node')
                 .style("font-size", "1em")
                 .attr('user-select', 'none')
-                .call(drag(simulation))
-                .merge(label)
-                .on('click', selectNode);
-         
+                .merge(label);
 
             simulation.nodes(graph.nodes as SimulationNodeDatum[]);
             simulation.alpha(1).restart();
@@ -158,31 +126,17 @@ export default function D3Graph() {
             //let linkNode = { source: 'z', target: r, weight: 1 };
             graph.nodes.push(newNode);
             //graph.links.push(linkNode);
+            setGraph(JSON.stringify(graph));
         }
 
-        function selectNode(event){
-            console.log(event.target.__data__.id);
-            console.log(document.querySelector(`circle [node-id="${event.target.__data__.id}"]`));
-            
-            //d3.select(document.querySelector('circle[node-id]')).style("fill", "yellow");
-            //document.querySelector('circle[node-id]').fill = "yellow";
-            //d3.select(`#${event.target.getAttribute('node-id')}`).style("fill", "yellow");
-            // if(event.target.localName == 'circle'){
-            //     d3.select(`#${event.target.id}`).style("fill", "yellow");
-            // }
-            // else if(event.target.localName == 'text'){
-            //     console.log(event.target);
-            //     d3.select(`#${event.target.getAttribute('node-id')}`).style("fill", "yellow");
-            // }
-
-            // console.log(event.target);
+        function selectNode(this, event) {
+            console.log(this.querySelector("circle"));
+            d3.select(this.querySelector("circle")).style("fill", "yellow");
         }
 
 
         function onClick(event) {
-            //console.log(event);
-            //console.log(event.type);
-            if(event.target.localName == 'svg' && !select){
+            if (event.target.localName == 'svg' && !select) {
                 addNode(event);
                 update();
             }
