@@ -11855,6 +11855,51 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+@keyframes sink {
+  to {
+    bottom: 0;
+  }
+}
+.button:hover {
+  animation-name: sink;
+  animation-duration: 4s;
+}
+
+#sec0 {
+  background: #1A053B;
+  color: #fffafa;
+}
+
+#sec1 {
+  background: #693A93;
+  color: #fffafa;
+}
+
+#sec2 {
+  background: #1A053B;
+  color: #fffafa;
+}
+
+#sec3 {
+  background: #693A93;
+  color: #fffafa;
+}
+
+#sec4 {
+  background: #1A053B;
+  color: #fffafa;
+}
+
+#whiteboard {
+  max-width: 100%;
+}
+
+#navb {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
 #purp {
   background-color: #140330;
   color: #fffafa;
@@ -11862,19 +11907,101 @@ textarea.form-control-lg {
 
 #welcome {
   text-align: center;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(0vw, 35vh);
+}
+
+#ideaDiv {
+  width: 80vw;
+  height: 100vh;
+  padding-top: 10%;
+}
+
+#problemStatement {
+  text-align: left;
+}
+
+#futureStatement {
+  text-align: left;
+}
+
+#featuresStatement {
+  text-align: left;
+}
+
+#ideaStatement {
+  text-align: right;
+}
+
+#problemText {
+  line-height: 300%;
+  transform: translate(0vw, 5%);
+}
+
+#futureText {
+  line-height: 300%;
+  transform: translate(0vw, 5%);
+}
+
+#featuresText {
+  line-height: 300%;
+  transform: translate(0vw, 5%);
+}
+
+#ideaText {
+  line-height: 300%;
+  text-align: right;
+  transform: translate(0vw, 5%);
+}
+
+#problemTextDiv {
+  height: 60%;
+}
+
+#futureTextDiv {
+  height: 60%;
+}
+
+#featuresTextDiv {
+  height: 60%;
+}
+
+#ideaTextDiv {
+  height: 60%;
+}
+
+#problemDiv {
+  width: 80vw;
+  height: 100vh;
+  padding-top: 10%;
+}
+
+#futureDiv {
+  width: 80vw;
+  height: 100vh;
+  padding-top: 10%;
+}
+
+#featuresDiv {
+  width: 80vw;
+  height: 100vh;
+  padding-top: 10%;
+}
+
+#welcomeDiv {
+  height: 100vh;
+  width: 80vw;
 }
 
 #welcomeLine {
   margin: auto;
-  width: 60%;
+  width: 40%;
+  transform: translate(0vw, 35vh);
 }
 
-#timer {
-  padding-top: 10%;
+#welcomeButton {
+  margin: auto;
+  width: 40%;
+  transform: translate(23.5vw, 37vh);
 }
 
 /*# sourceMappingURL=styles.css.map */

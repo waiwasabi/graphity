@@ -5,32 +5,117 @@
         <title>Document</title>
         <link rel="stylesheet" type="text/css" href="styles.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+        <link rel="shortcut icon" type="image/png" href="graphity1.png">
     </head>
 
-    <body id="purp">
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-
+    <body>
+        <nav id="navb" class="navbar navbar-expand-lg navbar-dark bg-dark" style="z-index: 10;">
             <div class="container-fluid" id="">
-              <!-- Links -->
               <ul class="navbar-nav">
-                <a class="navbar-brand" href="#">HackUMass 1010: Graph Visualizer</a>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Link 1</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Link 2</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Link 3</a>
+                <a class="navbar-brand" href="#"></a><img src="graphity1.png" width="7%" height="7%" alt=""></a>
+
+                <li class="nav-item active">
+                    <a style="position:absolute; top: 25%;" class="nav-link" href="https://github.com/waiwasabi/hack2023">Repository</a>
                 </li>
               </ul>
+
             </div>
         </nav>
 
-        <div id="welcome">
-            <h1 class="display-1">Welcome!</h1>
-            <hr id="welcomeLine">
-        </div>
+        <section id="sec0">
+            <div id="welcomeDiv" class="container-fluid sink-to-bottom">
+                <h1 id="welcome" class="display-1">Welcome!</h1>
+                <hr id="welcomeLine">
+            </div>
+        </section>
 
+        <section id="sec1">
+            <div id="problemDiv" class="container-fluid sink-to-bottom">
+                <h1 id="problemStatement">Problem Statement</h1>
+                <div class="row align-items-start">
+                    <div id="problemTextDiv" class="col">
+                        <p id="problemText">Many students have difficulty visualizing graph algorithms. 
+                            It is also difficult to construct graphs to test code on. 
+                            Since graphs are a fundamental computer science topic, 
+                            it is important for students to build a strong foundation.</p>
+                    </div>
+                    <div class="col">
+                        <img src="BFS_example.gif" alt="Example of BFS">
+                        <p class="attribution">"<a target="_blank" rel="noopener noreferrer" href="https://commons.wikimedia.org/w/index.php?curid=67916274">Level-based BFS example</a>" by <a target="_blank" rel="noopener noreferrer" href="https://commons.wikimedia.org/w/index.php?title=User:Jakob_Ned&action=edit&redlink=1">Jakob Ned</a> is licensed under <a target="_blank" rel="noopener noreferrer" href="https://creativecommons.org/licenses/by-sa/4.0/?ref=openverse">CC BY-SA 4.0 <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" style="height: 1em; margin-right: 0.125em; display: inline;"></img><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" style="height: 1em; margin-right: 0.125em; display: inline;"></img><img src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" style="height: 1em; margin-right: 0.125em; display: inline;"></img></a>. </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="sec2">
+            <div id="ideaDiv" class="container-fluid sink-to-bottom">
+                <h1 id="ideaStatement">Our Idea</h1>
+                <div class="row align-items-start">
+                    <div class="col">
+                        <img id="whiteboard" src="Graphity_Idea.jpg" alt="Whiteboard filled with our ideation">
+                    </div>
+    
+                    <div id="ideaTextDiv" class="col">
+                        <p id="ideaText">The objective of our project is to help students visualize graphing algorithms 
+                            and simplify the creation of test graphs. We believe that by showing a visual representation of a graph
+                            and indicating what nodes have been visited, students can strengthen their understanding of algorithms. By simplifying
+                            the graph creation process, we believe that it is easier for students to check edge cases and practice forming a mental model.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="sec3">
+            <div id="featuresDiv" class="container-fluid sink-to-bottom">
+                <h1 id="featuresStatement">Features</h1>
+                <div class="row">
+                    <div class="col-md-4">
+                      <div class="list-group" id="myTab" role="tablist">
+                        <a class="list-group-item list-group-item-action active" id="tab1-tab" data-toggle="list" href="#tab1" role="tab">Integrated JavaScript code editor</a>
+                        <a class="list-group-item list-group-item-action" id="tab2-tab" data-toggle="list" href="#tab2" role="tab">Interactive graph generation</a>
+                        <a class="list-group-item list-group-item-action" id="tab3-tab" data-toggle="list" href="#tab3" role="tab">Visual traversal representation</a>
+                        <a class="list-group-item list-group-item-action" id="tab4-tab" data-toggle="list" href="#tab4" role="tab">JSON graph representation downloader</a>
+                      </div>
+                    </div>
+                    <div class="col-md-8">
+                      <div class="tab-content">
+                        <div class="tab-pane fade show active" id="tab1" role="tabpanel">
+                          <img src="CodeEditor.png" style="max-width: 100%;">
+                        </div>
+                        <div class="tab-pane fade" id="tab2" role="tabpanel">
+                          <img src="lightbulb.png" style="max-width: 100%;">
+                        </div>
+                        <div class="tab-pane fade" id="tab3" role="tabpanel">
+                          <img src="lightbulb.png" style="max-width: 100%;">
+                        </div>
+                        <div class="tab-pane fade" id="tab4" role="tabpanel">
+                            <img src="generateJSON.png" style="max-width: 100%; max-height: 40vh;">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+        </section>
+
+        <section id="sec4">
+            <div id="futureDiv" class="container-fluid sink-to-bottom">
+                <h1 id="futureStatement">Future Ideas</h1>
+                <div class="row align-items-start">
+                    <div id="futureTextDiv" class="col">
+                        <ul class="list-group">
+                            <li class="list-group-item list-group-item-action">Other data structures</li>
+                            <li class="list-group-item">Cloud-based user sharing</li>
+                            <li class="list-group-item">Increased language compatability</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    
     </body>
 </html>
