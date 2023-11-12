@@ -1,8 +1,8 @@
 ### Instructions
 ##### Graph Creation
-**Node Tool** - Left click on any empty space to create a disconnected node
-**Edge Tool** - Left click on any two pre-existing nodes to create a directed edge
-**Eraser Tool** - Left click on any node to delete that node and any corresponding edges
+**Node Tool** - Left click on any empty space to create a disconnected node 
+**Edge Tool** - Left click on any two nodes to create an edge between them, or delete the edge if one already exists 
+**Eraser Tool** - Left click on any node to delete it.
 ##### Code Generation
 Press the **Generate** button to generate the JSON text corresponding to the graph created using the interface
 ##### Graph Visualization
