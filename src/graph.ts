@@ -1,6 +1,6 @@
 import {Graph} from './lib/Graph';
-import {GraphNode} from './lib/NodeT'
-import './lib/Edge'
+import {GraphNode} from './lib/NodeT';
+import {DirectedEdge} from './lib/Edge';
 
 export let graph = new Graph();
 
