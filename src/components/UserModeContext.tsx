@@ -6,7 +6,9 @@ export const UserModeContext = createContext<any>({} as any);
 export const UserMode = {
     Node: 1,
     Edge: 2,
-    Delete: 3
+    Delete: 3,
+    Point: 4,
+    Pan: 5
 }
 
 export default function UserModeProvider({ children }) {

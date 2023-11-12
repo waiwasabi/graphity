@@ -1,6 +1,6 @@
 'use client';
+
 import React, { useRef, useEffect, Component } from 'react';
-import { graph } from '../graph'
 
 function scrTop() {
     document.body.scrollTop = document.documentElement.scrollTop = 0;
