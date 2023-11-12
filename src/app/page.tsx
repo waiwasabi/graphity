@@ -18,9 +18,6 @@ export default function Home() {
       </div>
 
       <DownArrow />
-      <div id="d3-node-info">
-        <p>Node Info</p>
-      </div>
     </main>
   )
 }

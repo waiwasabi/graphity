@@ -22,7 +22,7 @@ export default function Toolbar() {
     return (
         <div className='absolute left-10 top-10 z-10 drop-shadow-md'>
             <div className="h-8 flex flex-row bg-[#D7E6EA] items-center px-3 py-1 rounded-lg">
-                <button className='toggleButton m-2 w-5 opacity-50 duration-500 hover:opacity-100' onClick={clickWrapper(UserMode.Node)}>
+                <button className='toggleButton m-2 w-5 opacity-100 duration-500 hover:opacity-100' onClick={clickWrapper(UserMode.Node)}>
                     <img src='/circle.png' alt='Node' />
                 </button>
 

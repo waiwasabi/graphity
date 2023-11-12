@@ -11,115 +11,125 @@ export const GraphContext = createContext<any>({} as any);
 
 export default function GraphContextProvider() {
     const [s_graph, setGraph] = useState(`{
-        "nodes": [
-          {
-            "id": "q",
+      "nodes": [
+        {
+          "key": "q",
+          "attributes": {
             "value": 7
-          },
-          {
-            "id": "a",
+          }
+        },
+        {
+          "key": "a",
+          "attributes": {
             "value": 1
-          },
-          {
-            "id": "r",
+          }
+        },
+        {
+          "key": "r",
+          "attributes": {
             "value": 6
-          },
-          {
-            "id": "s",
+          }
+        },
+        {
+          "key": "s",
+          "attributes": {
             "value": 8
-          },
-          {
-            "id": "t",
+          }
+        },
+        {
+          "key": "t",
+          "attributes": {
             "value": 5
-          },
-          {
-            "id": "u",
+          }
+        },
+        {
+          "key": "u",
+          "attributes": {
             "value": 6
-          },
-          {
-            "id": "v",
+          }
+        },
+        {
+          "key": "v",
+          "attributes": {
             "value": 3
-          },
-          {
-            "id": "w",
+          }
+        },
+        {
+          "key": "w",
+          "attributes": {
             "value": 5
-          },
-          {
-            "id": "x",
+          }
+        },
+        {
+          "key": "x",
+          "attributes": {
             "value": 1
-          },
-          {
-            "id": "y",
+          }
+        },
+        {
+          "key": "y",
+          "attributes": {
             "value": 2
-          },
-          {
-            "id": "z",
+          }
+        },
+        {
+          "key": "z",
+          "attributes": {
             "value": 6
           }
-        ],
-        "links": [
-          {
-            "source": "q",
-            "target": "a",
-            "weight": 1
-          },
-          {
-            "source": "q",
-            "target": "r",
-            "weight": 1
-          },
-          {
-            "source": "a",
-            "target": "t",
-            "weight": 1
-          },
-          {
-            "source": "r",
-            "target": "t",
-            "weight": 1
-          },
-          {
-            "source": "r",
-            "target": "s",
-            "weight": 1
-          },
-          {
-            "source": "s",
-            "target": "u",
-            "weight": 1
-          },
-          {
-            "source": "t",
-            "target": "v",
-            "weight": 1
-          },
-          {
-            "source": "u",
-            "target": "w",
-            "weight": 1
-          },
-          {
-            "source": "v",
-            "target": "x",
-            "weight": 1
-          },
-          {
-            "source": "w",
-            "target": "y",
-            "weight": 1
-          },
-          {
-            "source": "x",
-            "target": "z",
-            "weight": 1
-          },
-          {
-            "source": "y",
-            "target": "z",
-            "weight": 1
-          }
-        ]
-      }`);
+        }
+      ],
+      "edges": [
+        {
+          "source": "q",
+          "target": "a"
+        },
+        {
+          "source": "q",
+          "target": "r"
+        },
+        {
+          "source": "a",
+          "target": "t"
+        },
+        {
+          "source": "r",
+          "target": "t"
+        },
+        {
+          "source": "r",
+          "target": "s"
+        },
+        {
+          "source": "s",
+          "target": "u"
+        },
+        {
+          "source": "t",
+          "target": "v"
+        },
+        {
+          "source": "u",
+          "target": "w"
+        },
+        {
+          "source": "v",
+          "target": "x"
+        },
+        {
+          "source": "w",
+          "target": "y"
+        },
+        {
+          "source": "x",
+          "target": "z"
+        },
+        {
+          "source": "y",
+          "target": "z"
+        }
+      ]
+    }`);
 
     return (
         <GraphContext.Provider value={{ s_graph, setGraph }}>
@@ -127,13 +137,12 @@ export default function GraphContextProvider() {
                 <Toolbar />
                 <D3Graph />
             </UserModeProvider>
-            <div className='flex flex-row items-center justify-center'>
-                <div>
-                    <CodeGenerate />
+            <div className='flex flex-row items-center justify-center h-[600px] gap-5 px-10'>
+                <CodeInput />
+                <div className="rounded-lg bg-[#324449] text-white border-4 p-5 font-mono w-52 h-full flex-grow overflow-scroll">
+                  <p id='myLog'></p>
                 </div>
-                <div className='items-center'>
-                    <CodeInput />
-                </div>
+                <CodeGenerate />
             </div>
         </GraphContext.Provider>
     )
