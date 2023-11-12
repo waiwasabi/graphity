@@ -14,6 +14,7 @@ const height = 500;
 const radius = 23;
 
 let connectArray: [any, any] = [null, null];
+let select;
 
 export default function D3Graph() {
     const { s_graph, setGraph } = useContext(GraphContext);
@@ -116,7 +117,7 @@ export default function D3Graph() {
             circle = node.append('circle')
                 .attr('class', 'node')
                 .attr('r', radius)
-                .attr('fill', 'green')
+                .attr('fill', '#7E4E9F')
                 .merge(circle);
             label.remove();
             label = node.append('text')
@@ -124,6 +125,8 @@ export default function D3Graph() {
                 .attr('node-label', 'node')
                 .style("font-size", "1.5em")
                 .attr("text-anchor", "middle")
+                .attr("fill", "white")
+                .attr("opacity", 0.8)
                 .style("font-family", "monospace")
                 .attr('user-select', 'none')
                 .merge(label);
@@ -145,11 +148,11 @@ export default function D3Graph() {
             if (connectArray[0] == null) {
                 connectArray[0] = cur;
                 connectArray[1] = null;
-                d3.select(cur.querySelector("circle")).style("fill", "purple");
+                d3.select(cur.querySelector("circle")).style("fill", "#3F9ACA");
             }
             else if (connectArray[0] != null && connectArray[1] == null && connectArray[0] != cur) {
                 connectArray[1] = cur;
-                d3.select(cur.querySelector("circle")).style("fill", "purple");
+                d3.select(cur.querySelector("circle")).style("fill", "#3F9ACA");
 
                 let x = connectArray[0].getAttribute("nodeID");
                 let y = connectArray[1].getAttribute("nodeID");
@@ -185,10 +188,15 @@ export default function D3Graph() {
         }
 
         function selectNode(this, event) {
-            //let node = this.querySelector("circle");
             if (modeRef.current === UserMode.Point) {
-                d3.select(this.querySelector("circle")).style("fill", "yellow");
-                //todo: add node info somewhere in the page
+                if(select != null ){
+                    d3.select(select.querySelector("circle")).style("fill", "#7E4E9F");
+                    select = this;
+                    d3.select(select.querySelector("circle")).style("fill", "#4FBE97");
+                }
+                select = this;
+                d3.select(select.querySelector("circle")).style("fill", "#4FBE97");
+                
             }
 
             else if (modeRef.current === UserMode.Edge) {
