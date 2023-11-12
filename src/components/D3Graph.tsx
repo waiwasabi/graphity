@@ -12,7 +12,11 @@ const width = 920;
 const height = 500;
 const radius = 20;
 
-let select = true;
+let select = true; 
+let connect = false;
+let create = false;
+//let delete = true;
+let connectArray: [any, any] = [null, null];
 
 export default function D3Graph() {
     const { s_graph, setGraph } = useContext(GraphContext);
@@ -59,7 +63,7 @@ export default function D3Graph() {
         var node: any = svg.selectAll('.g').data(graph.nodes);
         var circle: any = svg.selectAll('.circle');
         var label: any = svg.selectAll('.node-label');
-        console.log(circle);
+        //console.log(circle);
         update();
 
         simulation.on("tick", () => {
@@ -73,8 +77,6 @@ export default function D3Graph() {
             // update node positions
 
             //node
-            // .attr("cx", d => d.x)
-            // .attr("cy", d => d.y);
             circle  // todo: pan
                 .attr('cx', function (d) { return d.x = Math.max(radius, Math.min(width - radius, d.x)); })
                 .attr('cy', function (d) { return d.y = Math.max(radius, Math.min(height - radius, d.y)); })
@@ -83,6 +85,7 @@ export default function D3Graph() {
             label
                 .attr("x", d => { return d.x; })
                 .attr("y", d => { return d.y; })
+            
         });
 
         function update() {
@@ -97,17 +100,20 @@ export default function D3Graph() {
                 .lower();
 
             node = node.data(graph.nodes, d => d.id);
+            //node.exit().remove();
             node = node.enter()
                 .append('g')
                 .attr('nodeID', d => d.id)
                 .merge(node)
                 .call(drag(simulation))
                 .on('click', selectNode);
+            circle.remove();
             circle = node.append('circle')
                 .attr('class', 'node')
                 .attr('r', radius)
                 .attr('fill', 'green')
                 .merge(circle);
+            label.remove();
             label = node.append('text')
                 .text(d => d.id)
                 .attr('node-label', 'node')
@@ -122,21 +128,61 @@ export default function D3Graph() {
         function addNode(event) {
             const point = d3.pointer(event);
             let r = (Math.random() + 1).toString(36).substring(7);
-            let newNode = { id: r, value: 7, x: point[0], y: point[1], vx: 0, vy: 0 };
-            //let linkNode = { source: 'z', target: r, weight: 1 };
+            let newNode = { id: r, value: 0, x: point[0], y: point[1], vx: 0, vy: 0 };
             graph.nodes.push(newNode);
-            //graph.links.push(linkNode);
             setGraph(JSON.stringify(graph, null, 2));
         }
 
-        function selectNode(this, event) {
-            console.log(this.querySelector("circle"));
-            d3.select(this.querySelector("circle")).style("fill", "yellow");
+        function selectNode(this, event){
+            let node = this.querySelector("circle");
+            if(select){
+                d3.select(this.querySelector("circle")).style("fill", "yellow");
+            }
+            
+            if(connect){
+                if(connectArray[0] == null){
+                    connectArray[0] = this;
+                    connectArray[1] = null;
+                    d3.select(this.querySelector("circle")).style("fill", "purple");
+                }
+                else if(connectArray[0] != null && connectArray[1] == null){
+                    connectArray[1] = this;
+                    d3.select(this.querySelector("circle")).style("fill", "purple");
+
+                    console.log("links:");
+                    console.log(graph.links);
+                    let x = connectArray[0].getAttribute("nodeID");
+                    let y = connectArray[1].getAttribute("nodeID");
+                    //graph.nodes.push({source: x, destination: y, weight: 1});
+                    let connectBool : boolean = true; 
+                    
+                    graph.links.forEach(link => {
+                        //console.log(`${link.source.id} ${link.destination}`);
+                        if(link.source.id == x && link.target.id ==y){
+                            console.log('can\'t add this connection');
+                            connectBool = false;
+                        }
+                    });
+
+                    if(connectBool){
+                        graph.links.push({source: x, target : y, weight: 1});
+                    }
+
+                    connectArray[0] = null;
+                    connectArray[1] = null;
+                    update();
+                    
+                }
+                
+                console.log(connectArray);
+            }
         }
 
 
         function onClick(event) {
-            if (event.target.localName == 'svg' && !select) {
+            //console.log(event);
+            //console.log(event.type);
+            if(event.target.localName == 'svg' && create){
                 addNode(event);
                 update();
             }
