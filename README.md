@@ -1,11 +1,11 @@
 ### Instructions
 ##### Graph Creation
-**Node Tool**  ![circle](https://github.com/waiwasabi/hack2023/assets/58406472/02abd2bd-55a1-4dda-a5b0-19f99822a377) - Left click on any empty space to create a disconnected node
+**Node Tool**  ![circle](https://github.com/waiwasabi/hack2023/assets/58406472/02abd2bd-55a1-4dda-a5b0-19f99822a377 | width=10) - Left click on any empty space to create a disconnected node
 
 
-**Edge Tool**  ![arrow](https://github.com/waiwasabi/hack2023/assets/58406472/79e4991d-0bb0-49b5-9aed-fb2611a6a06d) - Left click on any two nodes to create an edge between them, or delete the edge if one already exists 
+**Edge Tool**  ![arrow](https://github.com/waiwasabi/hack2023/assets/58406472/79e4991d-0bb0-49b5-9aed-fb2611a6a06d | width=10) - Left click on any two nodes to create an edge between them, or delete the edge if one already exists 
 
-**Eraser Tool** ![eraser](https://github.com/waiwasabi/hack2023/assets/58406472/186fd6fd-6f15-451c-a33e-3f453c5be1a9) - Left click on any node to delete it.
+**Eraser Tool** ![eraser](https://github.com/waiwasabi/hack2023/assets/58406472/186fd6fd-6f15-451c-a33e-3f453c5be1a9 | width=10) - Left click on any node to delete it.
 
 ##### Serialized Graph Generation
 Trigger the **Generate** button to generate a serialized representation of the graph.
