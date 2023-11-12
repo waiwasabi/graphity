@@ -9,10 +9,11 @@ const width = 920;
 const height = 500;
 const radius = 20;
 
-let select = false; 
+let select = true; 
 let connect = false;
-let create = true;
-let connectArray = new Array<any>(2);
+let create = false;
+//let delete = true;
+let connectArray: [any, any] = [null, null];
 
 export default function D3Graph() {
     const ref = useRef();
@@ -68,10 +69,13 @@ export default function D3Graph() {
             ]
         };
 
+       
+
         d3.select("#d3-graph svg").remove();
 
         const simulation = forceSimulation(graph.nodes as SimulationNodeDatum[])
-            .force('link', d3.forceLink(graph.links).id(d => (d as { id: string, value: number }).id).distance(60))
+            //.force('link', d3.forceLink(graph.links).id(d => (d as { id: string, value: number }).id).distance(60))//
+            .force('link', d3.forceLink(graph.links).id(d => d.id).distance(60))
             .force('charge', d3.forceManyBody().strength(-200))
             .force('center', d3.forceCenter(width / 2, height / 2));
 
@@ -86,7 +90,7 @@ export default function D3Graph() {
         var node: any = svg.selectAll('.g').data(graph.nodes);
         var circle: any = svg.selectAll('.circle');
         var label: any = svg.selectAll('.node-label');
-        console.log(circle);
+        //console.log(circle);
         update();
 
         simulation.on("tick", () => {
@@ -100,16 +104,16 @@ export default function D3Graph() {
             // update node positions
 
             //node
-            // .attr("cx", d => d.x)
-            // .attr("cy", d => d.y);
             circle  // todo: pan
                 .attr('cx', function (d) { return d.x = Math.max(radius, Math.min(width - radius, d.x)); })
-                .attr('cy', function (d) { return d.y = Math.max(radius, Math.min(height - radius, d.y)); });
+                .attr('cy', function (d) { return d.y = Math.max(radius, Math.min(height - radius, d.y)); })
+                .attr("fill", "green");
 
             // update label positions
             label
                 .attr("x", d => { return d.x; })
                 .attr("y", d => { return d.y; })
+            
         });
 
         function update() {
@@ -124,7 +128,7 @@ export default function D3Graph() {
                 .lower();
             
             node = node.data(graph.nodes, d => d.id);
-            node.remove();
+            //node.exit().remove();
             node = node.enter()
                 .append('g')
                 .attr('nodeID', d => d.id)
@@ -152,21 +156,53 @@ export default function D3Graph() {
         function addNode(event) {
             const point = d3.pointer(event);
             let r = (Math.random() + 1).toString(36).substring(7);
-            let newNode = { id: r, value: 7, x: point[0], y: point[1], vx: 0, vy: 0 };
-            let linkNode = { source: 'z', target: r, weight: 1 };
+            let newNode = { id: r, value: 0, x: point[0], y: point[1], vx: 0, vy: 0 };
             graph.nodes.push(newNode);
-            //graph.links.push(linkNode);
         }
 
         function selectNode(event){
-            console.log(this.querySelector("circle"));
+            let node = this.querySelector("circle");
             if(select){
                 d3.select(this.querySelector("circle")).style("fill", "yellow");
             }
             
-            // if(connect){
+            if(connect){
+                if(connectArray[0] == null){
+                    connectArray[0] = this;
+                    connectArray[1] = null;
+                    d3.select(this.querySelector("circle")).style("fill", "purple");
+                }
+                else if(connectArray[0] != null && connectArray[1] == null){
+                    connectArray[1] = this;
+                    d3.select(this.querySelector("circle")).style("fill", "purple");
 
-            // }
+                    console.log("links:");
+                    console.log(graph.links);
+                    let x = connectArray[0].getAttribute("nodeID");
+                    let y = connectArray[1].getAttribute("nodeID");
+                    //graph.nodes.push({source: x, destination: y, weight: 1});
+                    let connectBool : boolean = true; 
+                    
+                    graph.links.forEach(link => {
+                        //console.log(`${link.source.id} ${link.destination}`);
+                        if(link.source.id == x && link.target.id ==y){
+                            console.log('can\'t add this connection');
+                            connectBool = false;
+                        }
+                    });
+
+                    if(connectBool){
+                        graph.links.push({source: x, target : y, weight: 1});
+                    }
+
+                    connectArray[0] = null;
+                    connectArray[1] = null;
+                    update();
+                    
+                }
+                
+                console.log(connectArray);
+            }
         }
 
 
