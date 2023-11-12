@@ -9,7 +9,10 @@ const width = 920;
 const height = 500;
 const radius = 20;
 
-let select = true; 
+let select = false; 
+let connect = false;
+let create = true;
+let connectArray = new Array<any>(2);
 
 export default function D3Graph() {
     const ref = useRef();
@@ -121,17 +124,20 @@ export default function D3Graph() {
                 .lower();
             
             node = node.data(graph.nodes, d => d.id);
+            node.remove();
             node = node.enter()
                 .append('g')
                 .attr('nodeID', d => d.id)
                 .merge(node)
                 .call(drag(simulation))
                 .on('click', selectNode);
+            circle.remove();
             circle = node.append('circle')
                 .attr('class', 'node')
                 .attr('r', radius)
                 .attr('fill', 'green')
                 .merge(circle);
+            label.remove();
             label = node.append('text')
                 .text(d => d.id)
                 .attr('node-label', 'node')
@@ -154,14 +160,20 @@ export default function D3Graph() {
 
         function selectNode(event){
             console.log(this.querySelector("circle"));
-            d3.select(this.querySelector("circle")).style("fill", "yellow");
+            if(select){
+                d3.select(this.querySelector("circle")).style("fill", "yellow");
+            }
+            
+            // if(connect){
+
+            // }
         }
 
 
         function onClick(event) {
             //console.log(event);
             //console.log(event.type);
-            if(event.target.localName == 'svg' && !select){
+            if(event.target.localName == 'svg' && create){
                 addNode(event);
                 update();
             }
