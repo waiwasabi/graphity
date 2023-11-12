@@ -91,12 +91,7 @@ export default function D3Graph() {
         });
 
         function update() {
-
-
             link = link.data(graph.links, d => d.id);
-
-            link.links(graph.links)
-
             link.exit().remove();
             link = link.enter()
                 .append('line')
