@@ -38,3 +38,38 @@ class Graph {
 	addEdge(from: GraphNode, to: GraphNode): void;
 }
 ```
+
+### Examples
+Below are example use cases of the shell.
+
+#### Basic Analysis
+```ts
+/* print the number of nodes in the graph */
+console.log(graph.order);
+```
+
+#### Graph Search
+```ts
+/* Perform Breadth-First Search on the graph */
+const visited = new Set();
+const queue = ["r"];
+const result = [];
+
+visited.add("r");
+
+while (queue.length > 0) {
+  const currentNode = queue.shift();
+  result.push(currentNode);
+
+  const neighbors = graph.neighbors(currentNode);
+  for (let i = 0; i < neighbors.length; i++) {
+    const neighbor = neighbors[i];
+    if (!visited.has(neighbor)) {
+      visited.add(neighbor);
+      queue.push(neighbor);
+      console.log(neighbor);
+    }
+  }
+}
+```
+
