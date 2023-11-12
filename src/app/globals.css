@@ -20,12 +20,18 @@ html {
   scroll-behavior: smooth;
   max-width: 100%;
   overflow-x: hidden;
+  overflow-y: scroll;
 }
 
 
 body {
   color: rgb(var(--foreground-rgb));
   background: #E4EEF1;
+}
+
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent; /* make scrollbar transparent */
 }
 
 textarea::-webkit-scrollbar {
