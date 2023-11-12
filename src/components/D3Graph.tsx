@@ -80,8 +80,10 @@ export default function D3Graph() {
             .on("click", e => onClick(e));
 
         var link = svg.selectAll('.link').data(graph.links);
-        var node: any = svg.selectAll('.node').data(graph.nodes);
-        var label: any = svg.selectAll('.node-label').data(graph.nodes);
+        var node: any = svg.selectAll('.g').data(graph.nodes);
+        var circle: any = svg.selectAll('.circle');
+        var label: any = svg.selectAll('.node-label');
+        console.log(circle);
         update();
 
         simulation.on("tick", () => {
@@ -97,7 +99,7 @@ export default function D3Graph() {
             //node
             // .attr("cx", d => d.x)
             // .attr("cy", d => d.y);
-            node  // todo: pan
+            circle  // todo: pan
                 .attr('cx', function (d) { return d.x = Math.max(radius, Math.min(width - radius, d.x)); })
                 .attr('cy', function (d) { return d.y = Math.max(radius, Math.min(height - radius, d.y)); });
 
@@ -117,32 +119,52 @@ export default function D3Graph() {
                 .attr("stroke-opacity", 0.6)
                 .merge(link)
                 .lower();
-
+            
             node = node.data(graph.nodes, d => d.id);
-            //console.log(node);
-            node.exit().remove();
             node = node.enter()
-                .append('circle')
-                .attr('class', 'node')
-                .attr('r', radius)
-                .attr('fill', 'green')
+                .append('g')
                 .attr('nodeID', d => d.id)
                 .merge(node)
                 .call(drag(simulation))
                 .on('click', selectNode);
-
-            label = label.data(graph.nodes, d => d.id);
-            label.exit().remove();
-            label = label.enter()
-                .append('text')
-                .attr('class', 'node-label')
+            circle = node.append('circle')
+                .attr('class', 'node')
+                .attr('r', radius)
+                .attr('fill', 'green')
+                .merge(circle);
+            label = node.append('text')
                 .text(d => d.id)
-                .attr('nodeID', d => d.id)
+                .attr('node-label', 'node')
                 .style("font-size", "1em")
                 .attr('user-select', 'none')
-                .call(drag(simulation))
-                .merge(label)
-                .on('click', selectNode);
+                .merge(label);
+
+
+            // node = node.data(graph.nodes, d => d.id);
+            // //console.log(node);
+            // node.exit().remove();
+            // node = node.enter()
+            //     .append('circle')
+            //     .attr('class', 'node')
+            //     .attr('r', radius)
+            //     .attr('fill', 'green')
+            //     .attr('nodeID', d => d.id)
+            //     .merge(node)
+            //     .call(drag(simulation))
+            //     .on('click', selectNode);
+
+            // label = label.data(graph.nodes, d => d.id);
+            // label.exit().remove();
+            // label = label.enter()
+            //     .append('text')
+            //     .attr('class', 'node-label')
+            //     .text(d => d.id)
+            //     .attr('nodeID', d => d.id)
+            //     .style("font-size", "1em")
+            //     .attr('user-select', 'none')
+            //     .call(drag(simulation))
+            //     .merge(label)
+            //     .on('click', selectNode);
          
 
             simulation.nodes(graph.nodes as SimulationNodeDatum[]);
@@ -159,8 +181,9 @@ export default function D3Graph() {
         }
 
         function selectNode(event){
-            console.log(event.target.__data__.id);
-            console.log(document.querySelector(`circle [node-id="${event.target.__data__.id}"]`));
+            console.log(this);
+            //var nodeDom = document.querySelector(`circle[nodeID=\"${event.target.__data__.id}\"]`);
+            
             
             //d3.select(document.querySelector('circle[node-id]')).style("fill", "yellow");
             //document.querySelector('circle[node-id]').fill = "yellow";
