@@ -1,4 +1,5 @@
 'use client';
+
 import React, { useRef, useEffect, Component } from 'react';
 
 function scrollDown() {
