@@ -43,6 +43,10 @@ textarea::-webkit-scrollbar-thumb {
 
 textarea::selection { background:#B9B9B9; color:#000000; }
 
+.no-select {
+  user-select: none;
+}
+
 :root { font-family: 'Inter', sans-serif; }
 @supports (font-variation-settings: normal) {
   :root { font-family: 'Inter var', sans-serif; }

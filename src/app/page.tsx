@@ -1,5 +1,6 @@
+import D3Graph from '@/components/D3Graph'
 import Image from 'next/image'
-import Toolbar from '../components/Toolbar'
+import Toolbar from '../components/toolbar'
 import CodeInput from '@/components/CodeInput'
 
 export default function Home() {
@@ -9,9 +10,11 @@ export default function Home() {
       <Toolbar />
 
       <div className='flex flex-col'>
-        <div className='w-screen h-screen bg-slate300'>
-          
+        <div id='graph-screen' className='w-screen h-screen bg-slate300 no-select'>
+      <D3Graph />
+      <div id="d3-graph"></div>
         </div>
+
         <div className='text-center'>
           <CodeInput />
         </div>
