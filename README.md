@@ -16,12 +16,10 @@ function traverse(graph: Graph): void {
 
 At each step the user would like to visualize, **visit()** should be called on the node they would like highlighted. Additional documentation can be found below.
 ### Documentation
-##### Graph class
+##### Graph object
+The exposed `graph` variable is of type `graphology.Graph`. Please see https://graphology.github.io/ for relevant documentation.
 ``` ts
 class Graph {
-	/* Creates a new Graph object */
-	constructor();
-
 	/* Returns the array of all Node objects in the graph */
 	getNodes(): GraphNode[];
 
@@ -33,35 +31,5 @@ class Graph {
 
 	/* Adds a new Edge object between two pre-existing nodes */
 	addEdge(from: GraphNode, to: GraphNode): void;
-}
-```
-
-##### GraphNode class
-``` ts
-class GraphNode {
-	/* Creates a new GraphNode objects with the given id and val */
-	constructor(id: string, val: string);
-
-	/** Returns an array of GraphNodes the current node 
-	  * has a directed edge to */
-	getEdges(): GraphNode[];
-
-	/* Adds an Edge from the given GraphNode to a target GraphNode */
-	addEdge(target: GraphNode): void;
-
-	/* Marks a GraphNode as visited 
-	 * and displays it on the visualizer */
-	visit(): void;
-
-	/* Returns whether a GraphNode has been visited already */
-	isVisited(): boolean;
-}
-```
-
-##### DirectedEdge class
-``` ts
-class DirectedEdge {
-	/* Creates a DirectedEdge between the two given GraphNodes */
-	constructor(from: GraphNode, to: GraphNode);
 }
 ```
