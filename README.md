@@ -10,7 +10,7 @@
 Trigger the **Generate** button to generate a serialized representation of the graph.
 
 ##### Graph Visualization
-User input in the text editor is transformed into a TypeScript function that is called, which can be used to visualize the algorithm performed on the graph in real-time. The user does not need to include a class header, only the body of the following function:
+User input in the text editor is transformed into a JavaScript function, which can be used to run an algorithm on the graph in real-time. The user need not need include a class header, only the body of the following function:
 
 ``` ts
 function traverse(graph: Graph): void {
@@ -19,6 +19,7 @@ function traverse(graph: Graph): void {
 ```
 
 At each step the user would like to visualize, **visit()** should be called on the node they would like highlighted. Additional documentation can be found below.
+
 ### Documentation
 ##### Graph object
 The exposed `graph` variable is of type `graphology.Graph`. Please see https://graphology.github.io/ for relevant documentation.
