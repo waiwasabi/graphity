@@ -49,7 +49,12 @@ Below are example use cases of the shell.
 console.log(graph.order);
 ```
 
-#### Graph Search
+```ts
+/* print the order of a node in the graph */
+console.log(graph.degreeWithoutSelfLoops("q"));
+```
+
+#### Traversal
 ```ts
 /* Perform Breadth-First Search on the graph */
 const visited = new Set();
@@ -72,5 +77,23 @@ while (queue.length > 0) {
     }
   }
 }
+```
+
+```ts
+/* Perform Depth-First Search on the graph */
+const visited = new Set();
+  
+function dfs(node) {
+  visited.add(node);
+  console.log("Visited node: " + node);
+
+  graph.forEachNeighbor(node, (neighbor) => {
+    if (!visited.has(neighbor)) {
+      dfs(neighbor);
+    }
+  });
+}
+
+dfs("x");
 ```
 
