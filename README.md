@@ -1,36 +1,67 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+### Instructions
+##### Graph Creation
+**Node Tool** - Left click on any empty space to create a disconnected node
+**Edge Tool** - Left click on any two pre-existing nodes to create a directed edge
+**Eraser Tool** - Left click on any node to delete that node and any corresponding edges
+##### Code Generation
+Press the **Generate** button to generate the JSON text corresponding to the graph created using the interface
+##### Graph Visualization
+User input in the text editor is transformed into a TypeScript function that is called, which can be used to visualize the algorithm performed on the graph in real-time. The user does not need to include a class header, only the body of the following function:
 
-## Getting Started
-
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+``` ts
+function traverse(graph: Graph): void {
+	/* User input goes here */
+}
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+At each step the user would like to visualize, **visit()** should be called on the node they would like highlighted. Additional documentation can be found below.
+### Documentation
+##### Graph class
+``` ts
+class Graph {
+	/* Creates a new Graph object */
+	constructor();
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+	/* Returns the array of all Node objects in the graph */
+	getNodes(): GraphNode[];
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+	/* Returns the array of all Edge object in the graph */
+	getEdges(): DirectedEdge[];
 
-## Learn More
+	/* Adds a new GraphNode object into the Graph */
+	addNode(node: GraphNode): void;
 
-To learn more about Next.js, take a look at the following resources:
+	/* Adds a new Edge object between two pre-existing nodes */
+	addEdge(from: GraphNode, to: GraphNode): void;
+}
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+##### GraphNode class
+``` ts
+class GraphNode {
+	/* Creates a new GraphNode objects with the given id and val */
+	constructor(id: string, val: string);
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+	/** Returns an array of GraphNodes the current node 
+	  * has a directed edge to */
+	getEdges(): GraphNode[];
 
-## Deploy on Vercel
+	/* Adds an Edge from the given GraphNode to a target GraphNode */
+	addEdge(target: GraphNode): void;
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+	/* Marks a GraphNode as visited 
+	 * and displays it on the visualizer */
+	visit(): void;
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+	/* Returns whether a GraphNode has been visited already */
+	isVisited(): boolean;
+}
+```
+
+##### DirectedEdge class
+``` ts
+class DirectedEdge {
+	/* Creates a DirectedEdge between the two given GraphNodes */
+	constructor(from: GraphNode, to: GraphNode);
+}
+```

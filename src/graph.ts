@@ -1,8 +1,8 @@
 import {Graph} from './lib/Graph';
-import {GraphNode} from './lib/NodeT'
-import './lib/Edge'
+import {GraphNode} from './lib/NodeT';
+import {DirectedEdge} from './lib/Edge';
 
-let graph = new Graph();
+export let graph = new Graph();
 
 graph.addNode(new GraphNode("abc123", "1"));
 graph.addNode(new GraphNode("cd12", "2"));
