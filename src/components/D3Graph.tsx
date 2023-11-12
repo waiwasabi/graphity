@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useContext, useEffect, useRef } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import * as d3 from 'd3';
 import { forceSimulation, SimulationNodeDatum } from 'd3-force'
 import { GraphContext } from './GraphContext';
@@ -12,58 +12,59 @@ const width = 920;
 const height = 500;
 const radius = 20;
 
-let select = true;  // deprecated
-let connect = false; // deprecated
-let create = false; // deprecated
-//let delete = true;
-
 let connectArray: [any, any] = [null, null];
 
 export default function D3Graph() {
     const { s_graph, setGraph } = useContext(GraphContext);
     const { mode } = useContext(UserModeContext);
+    const modeRef = useRef();
+  
+    useEffect(() => {
+      modeRef.current = mode;
+    }, [mode]);
+
+    var svg, link, node, circle, label;
+
+    const drag = (simulation) => {
+        function dragstarted(event, d) {
+            if (!event.active) simulation.alphaTarget(0.3).restart();
+            d.fx = d.x;
+            d.fy = d.y;
+        }
+
+        function dragged(event, d) {
+            d.fx = event.x;
+            d.fy = event.y;
+        }
+
+        function dragended(event, d) {
+            if (!event.active) simulation.alphaTarget(0);
+            d.fx = null;
+            d.fy = null;
+        }
+
+        return d3.drag().on('start', dragstarted).on('drag', dragged).on('end', dragended);
+    };
+
+    const graph = JSON.parse(s_graph);
+
+    const simulation = forceSimulation(graph.nodes as SimulationNodeDatum[])
+        .force('link', d3.forceLink(graph.links).id(d => (d as GraphDatum).id).distance(60))
+        .force('charge', d3.forceManyBody().strength(-200))
+        .force('center', d3.forceCenter(width / 2, height / 2));
 
     useEffect(() => {
-        const graph = JSON.parse(s_graph);
-        const drag = (simulation) => {
-            function dragstarted(event, d) {
-                if (!event.active) simulation.alphaTarget(0.3).restart();
-                d.fx = d.x;
-                d.fy = d.y;
-            }
-
-            function dragged(event, d) {
-                d.fx = event.x;
-                d.fy = event.y;
-            }
-
-            function dragended(event, d) {
-                if (!event.active) simulation.alphaTarget(0);
-                d.fx = null;
-                d.fy = null;
-            }
-
-            return d3.drag().on('start', dragstarted).on('drag', dragged).on('end', dragended);
-        };
-
         d3.select("#d3-graph svg").remove();
-
-        const simulation = forceSimulation(graph.nodes as SimulationNodeDatum[])
-            .force('link', d3.forceLink(graph.links).id(d => (d as GraphDatum).id).distance(60))
-            .force('charge', d3.forceManyBody().strength(-200))
-            .force('center', d3.forceCenter(width / 2, height / 2));
-
-        const svg: any = d3
+        svg = d3
             .select('#d3-graph')
             .append('svg')
             .attr('width', width)
             .attr('height', height)
             .on("click", e => onClick(e));
-
-        var link = svg.selectAll('.link').data(graph.links);
-        var node: any = svg.selectAll('.g').data(graph.nodes);
-        var circle: any = svg.selectAll('.circle');
-        var label: any = svg.selectAll('.node-label');
+        link = svg.selectAll('.link').data(graph.links);
+        node = svg.selectAll('.g').data(graph.nodes);
+        circle = svg.selectAll('.circle');
+        label = svg.selectAll('.node-label');
         update();
 
         simulation.on("tick", () => {
@@ -134,11 +135,11 @@ export default function D3Graph() {
 
         function selectNode(this, event) {
             let node = this.querySelector("circle");
-            if (select) {
+            if (modeRef.current === UserMode.Point) {
                 d3.select(this.querySelector("circle")).style("fill", "yellow");
             }
 
-            if (connect) {
+            if (modeRef.current === UserMode.Edge) {
                 if (connectArray[0] == null) {
                     connectArray[0] = this;
                     connectArray[1] = null;
@@ -177,9 +178,8 @@ export default function D3Graph() {
             }
         }
 
-
         function onClick(event) {
-            if (event.target.localName == 'svg' && create) {
+            if (event.target.localName == 'svg' && modeRef.current === UserMode.Node) {
                 addNode(event);
                 update();
             }
