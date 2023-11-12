@@ -143,7 +143,6 @@ export default function D3Graph() {
         }
 
         function addEdge(cur){
-            console.log(graph.links);
             if (connectArray[0] == null) {
                 connectArray[0] = cur;
                 connectArray[1] = null;
@@ -159,7 +158,7 @@ export default function D3Graph() {
 
                 graph.links.forEach(link => {
                     if (link.source.id == x && link.target.id == y) {
-                        console.log('can\'t add this connection');
+                        //console.log('can\'t add this connection');
                         connectBool = false;
                     }
                 });
@@ -172,7 +171,6 @@ export default function D3Graph() {
                 connectArray[1] = null;
                 update();
             }
-            console.log(graph.links);
         }
 
         function deleteNode(cur){
