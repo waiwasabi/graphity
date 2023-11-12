@@ -10,7 +10,7 @@ type GraphDatum = { id: string, value: number };
 
 const width = 920;
 const height = 500;
-const radius = 20;
+const radius = 23;
 
 let select = true;  // deprecated
 let connect = false; // deprecated
@@ -19,6 +19,8 @@ let create = false; // deprecated
 
 let connectArray: [any, any] = [null, null];
 
+let btn = document.querySelectorAll("toggleButton");
+console.log(btn);
 export default function D3Graph() {
     const { s_graph, setGraph } = useContext(GraphContext);
     const { mode } = useContext(UserModeContext);
@@ -89,7 +91,12 @@ export default function D3Graph() {
         });
 
         function update() {
+
+
             link = link.data(graph.links, d => d.id);
+
+            link.links(graph.links)
+
             link.exit().remove();
             link = link.enter()
                 .append('line')
@@ -116,7 +123,9 @@ export default function D3Graph() {
             label = node.append('text')
                 .text(d => d.id)
                 .attr('node-label', 'node')
-                .style("font-size", "1em")
+                .style("font-size", "1.5em")
+                .attr("text-anchor", "middle")
+                .style("font-family", "monospace")
                 .attr('user-select', 'none')
                 .merge(label);
 
@@ -133,30 +142,27 @@ export default function D3Graph() {
         }
 
         function selectNode(this, event) {
-            let node = this.querySelector("circle");
-            if (select) {
+            console.log(mode);
+            if ( mode === UserMode.Point ) {
                 d3.select(this.querySelector("circle")).style("fill", "yellow");
+                //todo: add node info somewhere in the page
             }
 
-            if (connect) {
+            if (mode === UserMode.Edge) {
                 if (connectArray[0] == null) {
                     connectArray[0] = this;
                     connectArray[1] = null;
                     d3.select(this.querySelector("circle")).style("fill", "purple");
                 }
-                else if (connectArray[0] != null && connectArray[1] == null) {
+                else if (connectArray[0] != null && connectArray[1] == null && connectArray[0] != this) {
                     connectArray[1] = this;
                     d3.select(this.querySelector("circle")).style("fill", "purple");
 
-                    console.log("links:");
-                    console.log(graph.links);
                     let x = connectArray[0].getAttribute("nodeID");
                     let y = connectArray[1].getAttribute("nodeID");
-                    //graph.nodes.push({source: x, destination: y, weight: 1});
                     let connectBool: boolean = true;
 
                     graph.links.forEach(link => {
-                        //console.log(`${link.source.id} ${link.destination}`);
                         if (link.source.id == x && link.target.id == y) {
                             console.log('can\'t add this connection');
                             connectBool = false;
@@ -172,20 +178,17 @@ export default function D3Graph() {
                     update();
 
                 }
-
-                console.log(connectArray);
             }
         }
 
 
         function onClick(event) {
-            if (event.target.localName == 'svg' && create) {
+            if (event.target.localName == 'svg' && mode === UserMode.Node) {
                 addNode(event);
                 update();
             }
         }
-
-    }, []);
+    }, [mode]);
 
     return (
         <></>
