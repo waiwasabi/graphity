@@ -1,4 +1,5 @@
 import D3Graph from '@/components/D3Graph'
+import D3Graph from '@/components/D3Graph'
 import Image from 'next/image'
 import Toolbar from '../components/toolbar'
 import CodeInput from '@/components/CodeInput'
