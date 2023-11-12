@@ -12,7 +12,7 @@ export const UserMode = {
 }
 
 export default function UserModeProvider({ children }) {
-    const [mode, setMode] = useState(0);
+    const [mode, setMode] = useState(1);
     return (
         <UserModeContext.Provider value={{ mode, setMode }}>
             {children}
