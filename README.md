@@ -57,23 +57,17 @@ console.log(graph.degreeWithoutSelfLoops("q"));
 #### Traversal
 ```ts
 /* Perform Breadth-First Search on the graph */
+
+const queue = ["q"];
 const visited = new Set();
-const queue = ["r"];
-const result = [];
-
-visited.add("r");
-
 while (queue.length > 0) {
-  const currentNode = queue.shift();
-  result.push(currentNode);
+  const current = queue.shift();
+  if (!visited.has(current)) {
+    console.log(current)
+    visited.add(current);
 
-  const neighbors = graph.neighbors(currentNode);
-  for (let i = 0; i < neighbors.length; i++) {
-    const neighbor = neighbors[i];
-    if (!visited.has(neighbor)) {
-      visited.add(neighbor);
+    for (const neighbor of graph.neighbors(current)) {
       queue.push(neighbor);
-      console.log(neighbor);
     }
   }
 }
